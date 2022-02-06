@@ -1,0 +1,69 @@
+version: "3"
+
+services:
+
+  front:
+      build:
+        context: .
+        dockerfile: react-Dockerfile
+      container_name: front_react
+      restart: always
+      image: react
+      ports:
+        - "8080:3000"
+      # environment:
+      #   REACT_APP_CLIENT_ID: "${CLIENT_ID}"
+      #   REACT_APP_REDIRECT_URI: "${REDIRECT_URI}"
+      #   REACT_APP_BASE_IP: ${BASE_IP}
+      volumes:
+          - ./src/react-search:/app
+          - /app/node_modules
+      # networks:
+      #   - my_network
+    
+  # back:
+  #   build:
+  #     context: .
+  #     dockerfile: nest-Dockerfile
+  #   container_name: back_nest
+  #   restart: always
+  #   ports:
+  #     - "3000:3001"
+  #   environment:
+  #     POSTGRES_DB: "${POSTGRES_DB}"
+  #     POSTGRES_USER: "${POSTGRES_USER}"
+  #     POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+  #     CLIENT_ID: "${CLIENT_ID}"
+  #     CLIENT_SECRET: "${CLIENT_SECRET}"
+  #     REDIRECT_URI: "${REDIRECT_URI}"
+  #     BASE_IP: ${BASE_IP}
+  #   volumes:
+  #     - ./src/back:/app
+  #     - /app/node_modules
+  #     - ./src/back/imgs:/app/imgs
+  #   networks:
+  #     - my_network
+  #   depends_on:
+  #     - db
+  #   env_file:
+  #     - .env
+  
+  # db:
+  #   image: postgres:latest
+  #   container_name: database
+  #   restart: always
+  #   ports: 
+  #     - 5432:5432
+  #   environment:
+  #     POSTGRES_DB: "${POSTGRES_DB}"
+  #     POSTGRES_USER: "${POSTGRES_USER}"
+  #     POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+  #     PG_DATA: /var/lib/postgresql/data
+  #   networks:
+  #     - my_network
+  #   env_file:
+  #     - .env
+
+# networks:
+#   my_network:
+#     driver: bridge
