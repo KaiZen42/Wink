@@ -16,20 +16,24 @@ export default function Nav() {
   const [maxResults, setMaxResults] = useState(5);
   const [view, setView] = useState('');
   const [page, setPage] = useState(0);
+  const [maxPage, setMaxPage] = useState(0);
   let test: number = 0;
 
   // function setMaxRes()
   useEffect(() => {
     axios
       .get(
-        `https://www.googleapis.com/books/v1/volumes?q=${book}&maxResults=${maxResults}`
+        `https://www.googleapis.com/books/v1/volumes?q=${book}&maxResults=${maxResults}&startIndex=${
+          page * maxResults
+        }`
       )
       .then(({ data }) => {
-        console.log(data.items);
+        console.log(data.totalItems);
 
         setResult(data.items);
+        setMaxPage(data.totalItems / maxResults);
       });
-  }, [book, maxResults]);
+  }, [book, maxResults, page]);
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     event.preventDefault();
     const book = event.target.value;
@@ -231,11 +235,9 @@ export default function Nav() {
               </div>
             )}
           </div>
-          <Paginator
-            page={maxResults}
-            lastPage={5}
-            pageChanged={(page) => setPage(page)}
-          />
+          <div className="mx-auto-center mt-3">
+            <Paginator lastPage={maxPage} pageChanged={setPage} />
+          </div>
         </div>
       )}
     </body>
