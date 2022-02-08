@@ -1,5 +1,5 @@
 import { Books } from '../models/Books.interface';
-import '../PopUp.tsx';
+import '../../src/PopUp.css';
 
 function myFunction(): void {
   var popup: any = document.getElementById('myPopup');
