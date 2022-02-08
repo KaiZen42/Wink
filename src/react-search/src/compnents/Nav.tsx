@@ -8,12 +8,11 @@ export default function Nav() {
   const [book, setBook] = useState<string | null>(null);
   const [result, setResult] = useState<[]>([]);
   const [maxResults, setMaxResults] = useState(5);
-  const [view, setView] = useState('');
+  const [view, setView] = useState('list');
   const [page, setPage] = useState(0);
   const [maxPage, setMaxPage] = useState(0);
 
   useEffect(() => {
-    console.log(page + '<>' + maxPage + '<>' + maxResults);
     if (book) {
       axios
         .get(
@@ -23,7 +22,6 @@ export default function Nav() {
         )
         .then(({ data }) => {
           setResult(data.items);
-          console.log(data.totalItems);
           setMaxPage(Math.floor(data.totalItems / maxResults));
         });
     }
@@ -44,6 +42,11 @@ export default function Nav() {
         <a className="navbar-brand col-md-3 col-lg-2 mr-0 px-3">
           My Search App
         </a>
+        {book !== null && book !== '' && (
+          <div className="mt-3">
+            <Paginator page={page} lastPage={maxPage} pageChanged={setPage} />
+          </div>
+        )}
         <input
           className="form-control form-control-dark w-100"
           onChange={handleChange}
@@ -129,9 +132,6 @@ export default function Nav() {
             ) : (
               <Grid result={result} />
             )}
-          </div>
-          <div className="mt-3">
-            <Paginator page={page} lastPage={maxPage} pageChanged={setPage} />
           </div>
         </div>
       )}
