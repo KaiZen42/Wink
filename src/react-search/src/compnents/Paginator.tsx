@@ -1,20 +1,19 @@
 import React, { useState } from 'react';
 
 const Paginator = (props: {
+  page: number;
   lastPage: number;
   pageChanged: (page: number) => void;
 }) => {
-  let page = 1;
   const next = () => {
-	  if (page < props.lastPage) {
-	console.log("cpao"+props.lastPage);
-      props.pageChanged(page + 1);
+    if (props.page < props.lastPage) {
+      props.pageChanged(props.page + 1);
     }
   };
 
   const prev = () => {
-    if (page >= 1) {
-      props.pageChanged(page - 1);
+    if (props.page > 0) {
+      props.pageChanged(props.page - 1);
     }
   };
   return (
