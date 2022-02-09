@@ -42,11 +42,6 @@ export default function Nav() {
         <a className="navbar-brand col-md-3 col-lg-2 mr-0 px-3">
           My Search App
         </a>
-        {book !== null && book !== '' && (
-          <div className="mt-3">
-            <Paginator page={page} lastPage={maxPage} pageChanged={setPage} />
-          </div>
-        )}
         <input
           className="form-control form-control-dark w-100"
           onChange={handleChange}
@@ -113,6 +108,11 @@ export default function Nav() {
           </div>
         </div>
       </nav>
+      {result && book && (
+        <div className="fixed-top p-0" style={{ marginTop: '3rem' }}>
+          <Paginator page={page} lastPage={maxPage} pageChanged={setPage} />
+        </div>
+      )}
 
       {result === undefined && (
         <div className="alert alert-dark" role="alert">
@@ -126,7 +126,7 @@ export default function Nav() {
       )}
       {result && book && (
         <div className="container-fluid">
-          <div className="row">
+          <div className="row mt-5">
             {view === 'list' ? (
               <List result={result} maxResult={maxResults} page={page} />
             ) : (
